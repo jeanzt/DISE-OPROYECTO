@@ -1,0 +1,44 @@
+/********************************************************************************
+* This program demonstrates use of parallel ports in the DE10-Standard
+* It performs the following:
+* 1. displays a rotating pattern on the red LEDR
+* 2. if KEY[3] is pressed, change the pattern of LEDR
+********************************************************************************/
+#include <stdio.h>
+
+volatile int contador = 0;
+static void cont( void *pvParameters );
+
+int main(void)
+{
+	
+	volatile int * KEY_ptr = (int *) #DIRECCION DE NUESTRO PIO; // pushbutton KEY address
+	long contador = 0;
+	
+	double RPM;
+	
+	int KEY_value;
+
+	printf("Programación Exitosa\n");
+
+	while(1){
+		contador = contador +1;
+
+		KEY_value = *(KEY_ptr); // Lee los valores del pio del encoder
+		
+		if (KEY_value == 1)
+		{	
+			RPM = contador*60;
+		}
+		if (contador == 255)
+		{
+			contador = 0;
+		}
+	}
+}
+
+/*-----------------------------------------------------------*/
+/*static void cont( void *pvParameters )
+{
+	contador = contador + 1;
+}*/

@@ -1,0 +1,33 @@
+int PID(unsigned int setpoint,unsigned int current, float Kp, float Ki, float Kd) {
+	int error, pid_dc;
+	static int accumError, lastError;
+	static int P, I, D;
+
+	error = setpoint - current;
+	P = Kp * error;
+	accumError += error;
+	I = (Ki * accumError);
+	if ( I < -3000 )
+	{
+	I = -3000;
+	}
+	else if ( I > 3000 )
+	{
+	I = 3000;
+	}
+	int errorDiff = error - lastError;
+	lastError = error;
+	D = Kd * errorDiff;
+	pid_dc = P + I + D;
+
+	if ( pid_dc < 0 )
+	{
+	 pid_dc = 0;
+	}
+	else if ( pid_dc > 3000 )
+	{
+	 pid_dc = 3000;
+	}
+
+	return pid_dc;
+}
